@@ -1,4 +1,4 @@
-name: Build-PetPortalHosts
+name: Build-WindowsHosts
 on:
   push:
     tags:
