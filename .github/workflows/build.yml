@@ -4,7 +4,7 @@ on:
     tags:
       - '*'
 jobs:
-  build-pet-portal-hosts-version:
+  build-WindowsHosts-version:
     runs-on: ubuntu-latest
     steps:
       - uses: oprypin/find-latest-tag@v1
