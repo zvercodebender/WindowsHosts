@@ -1,0 +1,54 @@
+---
+apiVersion: xl-deploy/v1
+kind: Applications
+spec:
+- directory: Applications/WindowsHosts
+
+---
+apiVersion: xl-deploy/v1
+kind: Applications
+spec:
+- name: Applications/WindowsHosts/WindowsServers
+  type: udm.Application
+
+---
+apiVersion: xl-deploy/v1
+kind: Applications
+spec:
+- name: !format Applications/WindowsHosts/WindowsServers/%version%
+  type: udm.ProvisioningPackage
+  templates:
+  ##########################################################################
+  # windowsserver Template
+  - name: windowsserver
+    type: template.overthere.SmbHost
+    instanceName: '{{project}}/TEST/windowsserver'
+    childTemplates:
+    - name: iis_server
+      type: template.iis.Server
+    os: WINDOWS
+    connectionType: WINRM_INTERNAL
+    address: '{{%outputVariables.windowsserver_public_dns%}}'
+    username: root
+    password: Passw0rd!
+  #############################################################################
+  deployables:
+  - name: WindowsServers
+    type: terraform.Module
+    boundTemplates:
+    - !format Applications/WindowsHosts/WindowsServers/%version%/windowsserver
+    preScannedPlaceholders: true
+    placeholders:
+    - AWS_SECRET_KEY
+    - AWS_ACCESS_KEY
+    fileEncodings:
+      ".+\\.properties": ISO-8859-1
+    environmentPath: 'windows-{{project}}/{{project}}-DEV'
+    automaticDictionary: "true"
+    dictionaryPath: 'windows-{{project}}-dic'
+    generateCIsFromResources: "true"
+    inputVariables:
+      project: rrb-aws
+      ami: ami-0d5b55fd8cd8738f5
+      aws_region: us-east-2
+    file: !file "artifacts/aws.ec2_instance.zip"
