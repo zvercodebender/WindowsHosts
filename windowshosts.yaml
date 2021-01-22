@@ -30,7 +30,7 @@ spec:
     connectionType: WINRM_INTERNAL
     address: '{{%outputVariables.windowsserver_public_dns%}}'
     username: root
-    password: Passw0rd!
+    password: {{WINDOWS_PASSWORD}}
   #############################################################################
   deployables:
   - name: WindowsServers
@@ -41,6 +41,7 @@ spec:
     placeholders:
     - AWS_SECRET_KEY
     - AWS_ACCESS_KEY
+    - WINDOWS_PASSWORD
     fileEncodings:
       ".+\\.properties": ISO-8859-1
     environmentPath: 'windows-{{project}}/{{project}}-DEV'
