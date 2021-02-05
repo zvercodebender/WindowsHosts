@@ -18,6 +18,12 @@ spec:
 - name: !format Applications/WindowsHosts/WindowsServers/%version%
   type: udm.ProvisioningPackage
   templates:
+  - name: InfraTEST
+    type: template.core.Directory
+    instanceName: 'Infrastructure/{{project}}/TEST'
+  - name: EnvTEST
+    type: template.core.Directory
+    instanceName: 'Environments/{{project}}'
   ##########################################################################
   # windowsserver Template
   - name: windowsserver
@@ -30,7 +36,7 @@ spec:
     connectionType: WINRM_INTERNAL
     address: '{{%outputVariables.windowsserver_public_dns%}}'
     username: root
-    password: {{WINDOWS_PASSWORD}}
+    password: '{{WINDOWS_PASSWORD}}'
   #############################################################################
   deployables:
   - name: WindowsServers
@@ -44,9 +50,9 @@ spec:
     - WINDOWS_PASSWORD
     fileEncodings:
       ".+\\.properties": ISO-8859-1
-    environmentPath: 'windows-{{project}}/{{project}}-DEV'
+    environmentPath: 'Environments/{{project}}/Windows-TEST'
     automaticDictionary: "true"
-    dictionaryPath: 'windows-{{project}}-dic'
+    dictionaryPath: 'Environments/{{project}}/Windows-TEST-dic'
     generateCIsFromResources: "true"
     inputVariables:
       project: rrb-aws

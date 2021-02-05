@@ -36,8 +36,8 @@ Get-NetFirewallrule WINRM-HTTP-In-TCP-PUBLIC | Get-NetFirewallAddressFilter | Se
 
 $myPassword = "{{WINDOWS_PASSWORD}}"
 $myPasswordEnc = ConvertTo-SecureString -String $myPassword -AsPlainText -Force
-New-LocalUser -Name root -Description "Root User" -Password $myPasswordEnc –Verbose
-Set-LocalUser -Name root –PasswordNeverExpires $False
+New-LocalUser -Name root -Description "Root User" -Password $myPasswordEnc -Verbose
+Set-LocalUser -Name root -PasswordNeverExpires $False
 Add-LocalGroupMember -Group "Administrators" -Member "root"
 Add-LocalGroupMember -Group "Remote Management Users" -Member "root"
 Install-WindowsFeature -name Web-Server -IncludeManagementTools
