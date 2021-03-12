@@ -19,7 +19,6 @@ variable "aws_region" {
   default      = "us-east-2"
 }
 
-
 variable "my-sg" {
   type    = list(string)
   default = ["sg-0d6c41f3ecf0fb5c2"]
