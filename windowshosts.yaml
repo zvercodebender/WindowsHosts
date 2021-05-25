@@ -56,6 +56,6 @@ spec:
     generateCIsFromResources: "true"
     inputVariables:
       project: rrb-aws
-      ami: ami-0d5b55fd8cd8738f5
+      ami: ami-086850e3dda52e84a
       aws_region: us-east-2
     file: !file "artifacts/aws.ec2_instance.zip"
